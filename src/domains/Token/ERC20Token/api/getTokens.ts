@@ -32,8 +32,9 @@ export async function getTokens({
     if (data && data > BigInt(0)) {
       const _token: ERC20Token = {
         ...token,
-        balance: String(Number(data) * 10 ** token.decimals),
+        balance: String(Number(data) / 10 ** token.decimals),
       };
+      tokens.push(_token);
     }
   }
   return tokens;
