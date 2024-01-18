@@ -2042,7 +2042,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-connectkit@^1.6.0:
+connectkit@^1.5.3:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/connectkit/-/connectkit-1.6.0.tgz#1b15cc21f6670d63dc4c9aaccf99d0a58900e878"
   integrity sha512-uZBuSTHcxK1RW5Malrz0jkzWDWmmv121ht/KVfG5PXv/sWNt4S1V+s6RS5s2ESpASlTifLoyVKDMg6BdGkbn2w==

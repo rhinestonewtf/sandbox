@@ -15,7 +15,6 @@ export const useActiveValidator = () => {
     let validator = validatorName ? validators[validatorName] : null;
 
     if (validatorName && validator) {
-      validator.address = contracts[validatorName];
       setActiveValidator(validator);
     } else {
       const selectedValidator = activeAccount.webauthnKeyId
@@ -28,7 +27,6 @@ export const useActiveValidator = () => {
       );
 
       validator = validators[selectedValidator];
-      validator.address = contracts[selectedValidator];
 
       setActiveValidator(validator);
     }

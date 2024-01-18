@@ -12,6 +12,22 @@ type Props = {
   onSignerChanged: (signer: string) => void;
 };
 
+import { ConnectKitButton } from "connectkit";
+
+export const ExampleButton = () => {
+  return (
+    <ConnectKitButton.Custom>
+      {({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
+        return (
+          <button onClick={show} style={{}}>
+            {isConnected ? address : "Custom Connect"}
+          </button>
+        );
+      }}
+    </ConnectKitButton.Custom>
+  );
+};
+
 export const ConnectSigner = ({
   title,
   subTitle,
@@ -43,13 +59,13 @@ export const ConnectSigner = ({
   //   }
   // }, [session])
 
-  // useEffect(() => {
-  //   if (isConnected && open) {
-  //     localStorage.setItem(`${session?.user?.email}-signer`, address as string)
-  //     setSigner(address as string)
-  //     onSignerChanged(address as string)
-  //   }
-  // }, [isConnected, open])
+  useEffect(() => {
+    if (isConnected && open) {
+      localStorage.setItem(`signer`, address as string);
+      setSigner(address as string);
+      onSignerChanged(address as string);
+    }
+  }, [isConnected, open]);
 
   return (
     <>

@@ -15,7 +15,7 @@
     "@tanstack/react-query": "^5.17.15",
     "cbor": "^9.0.1",
     "classnames": "^2.5.1",
-    "connectkit": "^1.6.0",
+    "connectkit": "^1.5.3",
     "daisyui": "^4.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.30.1",

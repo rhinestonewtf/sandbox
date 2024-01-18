@@ -70,12 +70,12 @@ export const Providers = ({ children }: Props) => {
         chains,
         options: { appName: "Rhinestone" },
       }),
-      new WalletConnectConnector({
-        chains,
-        options: {
-          projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-        },
-      }),
+      // new WalletConnectConnector({
+      //   chains,
+      //   options: {
+      //     projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+      //   },
+      // }),
     ],
     publicClient,
   });
