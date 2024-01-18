@@ -1,8 +1,8 @@
 "use client";
 import { useAccount } from "wagmi";
-import { useModal } from "connectkit";
 import { useEffect, useState } from "react";
 import { SignItem } from "../domains/User/components";
+import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 type Props = {
   title?: string;
@@ -10,22 +10,6 @@ type Props = {
   selectedSigner?: string;
   disabled?: boolean;
   onSignerChanged: (signer: string) => void;
-};
-
-import { ConnectKitButton } from "connectkit";
-
-export const ExampleButton = () => {
-  return (
-    <ConnectKitButton.Custom>
-      {({ isConnected, isConnecting, show, hide, address, ensName, chain }) => {
-        return (
-          <button onClick={show} style={{}}>
-            {isConnected ? address : "Custom Connect"}
-          </button>
-        );
-      }}
-    </ConnectKitButton.Custom>
-  );
 };
 
 export const ConnectSigner = ({
@@ -36,7 +20,7 @@ export const ConnectSigner = ({
   disabled,
 }: Props) => {
   const { address, isConnected } = useAccount();
-  const { setOpen, open } = useModal();
+  const { openConnectModal, connectModalOpen: open } = useConnectModal();
   const [signer, setSigner] = useState(
     localStorage.getItem(`signer`) || selectedSigner
   );
@@ -49,18 +33,9 @@ export const ConnectSigner = ({
     }
   }, [isConnected]);
 
-  // useEffect(() => {
-  //   if (session) {
-  //     if (session.isWalletSession) {
-  //       setSigner(address as string)
-  //       onSignerChanged(address as string)
-  //       localStorage.setItem(`${session.user?.email}-signer`, address as string)
-  //     }
-  //   }
-  // }, [session])
-
   useEffect(() => {
     if (isConnected && open) {
+      console.log("here");
       localStorage.setItem(`signer`, address as string);
       setSigner(address as string);
       onSignerChanged(address as string);
@@ -75,7 +50,7 @@ export const ConnectSigner = ({
         subTitle="Sign transactions using your existing wallet"
         isSelected={!!signer}
         onClick={() => {
-          !disabled && setOpen(true);
+          !disabled && openConnectModal ? openConnectModal() : null;
         }}
       />
     </>

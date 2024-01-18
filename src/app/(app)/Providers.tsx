@@ -1,8 +1,9 @@
 "use client";
+import "@rainbow-me/rainbowkit/styles.css";
+import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Hex } from "viem";
 import * as allChains from "viem/chains";
 import { useEffect, useState } from "react";
-import { ConnectKitProvider } from "connectkit";
 import { Account } from "@/src/domains/Account";
 import { Network } from "@/src/domains/Network";
 import { publicProvider } from "wagmi/providers/public";
@@ -61,28 +62,22 @@ export const Providers = ({ children }: Props) => {
 
   const queryClient = new QueryClient();
 
+  const { connectors } = getDefaultWallets({
+    appName: "Rhinestone Playground",
+    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    chains,
+  });
+
   const wagmiConfig = createConfig({
     autoConnect: true,
 
-    connectors: [
-      new InjectedConnector({ chains }),
-      new CoinbaseWalletConnector({
-        chains,
-        options: { appName: "Rhinestone" },
-      }),
-      // new WalletConnectConnector({
-      //   chains,
-      //   options: {
-      //     projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-      //   },
-      // }),
-    ],
+    connectors,
     publicClient,
   });
 
   return (
     <WagmiConfig config={wagmiConfig}>
-      <ConnectKitProvider>
+      <RainbowKitProvider chains={chains}>
         <QueryClientProvider client={queryClient}>
           <ActiveAccountContext.Provider
             value={{ activeAccount, setActiveAccount }}
@@ -114,7 +109,7 @@ export const Providers = ({ children }: Props) => {
             </ActiveNetworkContext.Provider>
           </ActiveAccountContext.Provider>
         </QueryClientProvider>
-      </ConnectKitProvider>
+      </RainbowKitProvider>
     </WagmiConfig>
   );
 };
