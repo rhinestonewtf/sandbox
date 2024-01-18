@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  }
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
+
+@layer utilities {
+  .pause {
+    animation-play-state: paused;
+  }
+}
+
+@layer components {
+  .step-item {
+    @apply relative flex flex-col justify-center items-center w-60;
+  }
+
+  .step-item:not(:first-child):before {
+    @apply content-[''] bg-slate-200 absolute w-full h-[3px] right-2/4 top-1/3 -translate-y-2/4;
+  }
+
+  .step {
+    @apply w-10 h-10 flex items-center justify-center z-10 relative bg-slate-700 rounded-full font-semibold text-white;
+  }
+}
+
+@layer components {
+  .btn.regular-primary {
+    @apply bg-primary text-primary-content btn-sm rounded-3xl font-normal text-xs;
+  }
+
+  .btn.large-neutral {
+    @apply bg-neutral-dark text-neutral-dark-content;
+  }
+
+  .btn.regular-neutral {
+    @apply bg-neutral-dark text-neutral-dark-content font-normal;
+  }
+
+  .btn.secondary {
+    @apply bg-secondary text-secondary-content text-xs font-normal;
+  }
+
+  .login-btn {
+    @apply btn w-80 box-border font-mono h-12 px-3 py-2 bg-neutral-50 rounded-[100px] border border-[#05003B05] border-opacity-20 justify-center items-center gap-2 flex relative;
+  }
+
+  .login-btn .login-btn-text {
+    @apply text-slate-900 text-xs font-medium uppercase leading-none;
+  }
+
+  .profile-security-btn {
+    @apply bg-neutral-dark text-neutral-dark-content font-mono text-xs font-medium uppercase w-[350px] hover:bg-neutral-dark;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-content;
+  }
+}
+
+@layer components {
+  .text-heading-0,
+  .text-heading-1 {
+    @apply font-normal;
+  }
+
+  .text-paragraph-accent {
+    @apply font-medium;
+  }
+
+  .dropdown-text {
+    @apply font-mono font-medium text-slate-900 text-xs;
+  }
+}
+
+@layer components {
+  .profile-security-item {
+    @apply bg-base-100 border border-base-200 border-opacity-20 rounded-xl;
+  }
+  .security-option-title {
+    @apply text-neutral-dark text-base font-medium leading-normal;
+  }
+
+  .security-option-subtitle {
+    @apply text-neutral-dark opacity-50 text-sm font-normal text-left leading-tight;
+  }
+}
+
+@layer components {
+  .dropdown-content li {
+    @apply p-[2px] px-0 m-0 font-mono uppercase text-xs;
+  }
+
+  .dropdown-content li a {
+    @apply p-2 gap-2 hover:!bg-secondary;
+  }
+}
+
+@layer components {
+  .drawer-toggle:checked ~ .drawer-side > .drawer-overlay {
+    @apply bg-neutral-50 bg-opacity-95;
+  }
+
+  .drawer-end .drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay) {
+    transform: translateX(-8px);
+  }
+}
+
+@layer components {
+  .toggle-primary:checked,
+  .toggle-primary[checked="true"],
+  .toggle-primary[aria-checked="true"] {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  .vault-table th {
+    @apply text-gray-500 text-xs font-medium font-mono uppercase;
+  }
+}
+
+@layer components {
+  .radio:checked,
+  .radio[aria-checked="true"] {
+    @apply bg-primary;
+  }
+}
+
+@layer components {
+  .tab:hover {
+    @apply text-primary;
+  }
+}
