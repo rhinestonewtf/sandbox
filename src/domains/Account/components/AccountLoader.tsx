@@ -23,8 +23,6 @@ export const AccountLoader = ({ children }: PropsWithChildren) => {
     try {
       const accounts = await fetchAccounts();
 
-      console.log(accounts);
-
       if (!accounts?.length) {
         return router.push("/login");
       }

@@ -28,7 +28,6 @@ export async function getTokens({
       functionName: "balanceOf",
       args: [account.address],
     })) as bigint;
-    console.log(data);
     if (data && data > BigInt(0)) {
       const _token: ERC20Token = {
         ...token,

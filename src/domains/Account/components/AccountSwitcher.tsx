@@ -1,14 +1,18 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import classNames from "classnames";
 import { useActiveAccount } from "../hooks";
 import { formatAddress } from "@/src/utils/common";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { CopyIcon } from "@/src/ui-kit/Icons";
+import { Account } from "../Account";
 
 export const AccountSwitcher = () => {
-  const [activeAccount] = useActiveAccount();
+  const [activeAccount, setActiveAccount] = useActiveAccount();
+  const [accounts, setAccounts] = useState(
+    JSON.parse(localStorage.getItem(`accounts`) ?? "[]")
+  );
 
   const copyAddress = () => {
     if (!activeAccount) return;
@@ -33,10 +37,33 @@ export const AccountSwitcher = () => {
         tabIndex={0}
         className="dropdown-content z-[1] menu p-2 py-1 rounded-lg shadow bg-white border-base-300 border w-[240px]"
       >
-        <li className="flex justify-center">
+        <li className="flex justify-center border-b-[1px]">
           <a onClick={copyAddress} className="">
             <CopyIcon />
             Copy address
+          </a>
+        </li>
+        {accounts.map(
+          (account: Account) =>
+            account.address !== activeAccount.address && (
+              <li className="flex justify-center" key={account.address}>
+                <a
+                  onClick={() => {
+                    setActiveAccount({
+                      ...activeAccount,
+                      ...account,
+                    });
+                  }}
+                  className=""
+                >
+                  {formatAddress(account.address)}
+                </a>
+              </li>
+            )
+        )}
+        <li className="flex justify-center border-t-[1px]">
+          <a href="/login" className="">
+            Create account
           </a>
         </li>
       </ul>
