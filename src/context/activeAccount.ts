@@ -12,6 +12,7 @@ export const ActiveAccountContext = createContext<{
     webauthnKeyId: "",
     initCode: "" as Hex,
     deployedOnNetworks: [],
+    tokens: [],
     balance: { balance: "0", symbol: "ETH" },
   },
   setActiveAccount: () => {},

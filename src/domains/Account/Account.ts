@@ -1,4 +1,5 @@
 import { Address, Hex } from "viem";
+import { ERC20Token } from "../Token/ERC20Token/ERC20Token";
 
 export type Account = {
   address: Address;
@@ -7,6 +8,7 @@ export type Account = {
   walletSigner?: string;
   initCode: Hex;
   deployedOnNetworks: number[];
+  tokens: ERC20Token[];
   balance: AccountBalance;
 };
 

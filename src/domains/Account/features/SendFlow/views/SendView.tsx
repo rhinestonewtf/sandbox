@@ -1,25 +1,31 @@
 "use client";
 
-import { Address, isAddress } from "viem";
+import { isAddress } from "viem";
 import { useState } from "react";
 import { InputText } from "@/src/ui-kit/Input";
 import { LargeButton, Layout } from "@/src/ui-kit";
 import { SideHeader } from "@/src/ui-kit/SideHeader";
 import { NetworkSwitcher } from "../../../../Network/components";
-import { InputTokenAmount } from "../../../components/InoutTokenAmount";
+import { ERC20Token } from "../../../../Token/ERC20Token/ERC20Token";
+import { useGetUserTokens } from "@/src/domains/Token/ERC20Token/hooks";
+import { InputTokenAmount } from "../../../../Token/components/InputTokenAmount";
 
 type Props = {
   isUserOpCreated: boolean;
   onSendClick: ({
+    token,
     address,
     amount,
   }: {
-    address: Address;
+    token: ERC20Token;
+    address: string;
     amount: number;
   }) => void;
 };
 
 export const SendView = ({ isUserOpCreated, onSendClick }: Props) => {
+  const userTokens = useGetUserTokens({ withNativeCoin: true }) as ERC20Token[];
+  const [token, setToken] = useState<ERC20Token>(userTokens[0]);
   const [address, setAddress] = useState<string | undefined>();
   const [amount, setAmount] = useState<string | undefined>();
 
@@ -47,7 +53,12 @@ export const SendView = ({ isUserOpCreated, onSendClick }: Props) => {
 
       <Layout.Content>
         <div className="flex flex-col w-[448px] mt-[146px] gap-2">
-          <InputTokenAmount label="Token to send" onAmountChange={setAmount} />
+          <InputTokenAmount
+            label="Token to send"
+            onTokenChange={setToken}
+            onAmountChange={setAmount}
+            tokensList={userTokens}
+          />
           <InputText
             value={address}
             title="Recipient"
@@ -64,7 +75,7 @@ export const SendView = ({ isUserOpCreated, onSendClick }: Props) => {
           disabled={!isSendEnabled || isUserOpCreated}
           onClick={() =>
             isSendEnabled &&
-            onSendClick({ address, amount: parseFloat(amount) })
+            onSendClick({ token, address, amount: parseFloat(amount) })
           }
         >
           {getButtonText()}

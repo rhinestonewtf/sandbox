@@ -3,17 +3,14 @@ import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { Hex } from "viem";
 import * as allChains from "viem/chains";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Account } from "@/src/domains/Account";
 import { Network } from "@/src/domains/Network";
 import { publicProvider } from "wagmi/providers/public";
 import { infuraProvider } from "wagmi/providers/infura";
-import { InjectedConnector } from "wagmi/connectors/injected";
 import { networks } from "@/src/domains/Network/api/networks";
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { WalletConnectConnector } from "wagmi/connectors/walletConnect";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { PendingTransaction } from "@/src/domains/Transaction/Transaction";
 import { WagmiConfig, createConfig, configureChains, Address } from "wagmi";
 import { PendingUserOperation } from "@/src/domains/UserOperation/UserOperation";
@@ -46,6 +43,7 @@ export const Providers = ({ children }: Props) => {
     webauthnKeyId: "",
     initCode: "" as Hex,
     deployedOnNetworks: [],
+    tokens: [],
     balance: {
       balance: "0",
       symbol: activeNetwork.nativeCurrency.symbol,
