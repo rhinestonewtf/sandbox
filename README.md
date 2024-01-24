@@ -24,7 +24,13 @@ To add a new network, add an entrey to the `networks` object in `src/domains/Net
 
 ## Features
 
-- [ ] todo
+- [x] Create an ERC-7579 smart account using either an EOA or a passkey as a signer
+- [x] Multi-account support and switcher
+- [x] Utility functions for interacting with the smart account
+- [x] Complete abstraction of ERC-4337 flows
+- [x] Activity log using Jiffyscan
+- [x] Faucet for testnet tokens
+- [x] Support for displaying and transfering ERC-20 tokens
 
 ## Contributing
 
