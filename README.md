@@ -1,16 +1,13 @@
-# ModuleKit UI Playground
+# Rhinestone Sandbox
 
-**A UI playground building and testing smart account modules.**
+**A frontend playground building and testing smart account modules.**
 
-> The ModuleKit UI Playground is in active development and is subject to breaking changes. If you spot a bug, please take out an issue and we will fix it as soon as we can.
+> The Sandbox is in active development and is subject to breaking changes. If you spot a bug, please take out an issue and we will fix it as soon as we can.
 
 ## Installation
 
 ```bash
-git clone https://github.com/rhinestonewtf/modulekit-ui-playground.git
-cd modulekit-ui-playground
 yarn install
-yarn dev
 ```
 
 ## Usage
@@ -28,9 +25,11 @@ To add a new network, add an entrey to the `networks` object in `src/domains/Net
 - [x] Multi-account support and switcher
 - [x] Utility functions for interacting with the smart account
 - [x] Complete abstraction of ERC-4337 flows
-- [x] Activity log using Jiffyscan
+- [x] Activity log using [Jiffyscan](https://jiffyscan.xyz/)
 - [x] Faucet for testnet tokens
-- [x] Support for displaying and transfering ERC-20 tokens
+- [x] Support for transfering ERC-20 tokens
+- [ ] Add an indexer to dynamically fetch all assets and balances
+- [ ] Switch active validator
 
 ## Contributing
 
