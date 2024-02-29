@@ -4,6 +4,8 @@
 
 > The Sandbox is in active development and is subject to breaking changes. If you spot a bug, please take out an issue and we will fix it as soon as we can.
 
+![sandbox dashboard](./public/dashboard.png)
+
 ## Installation
 
 ```bash
@@ -12,12 +14,12 @@ yarn install
 
 ## Usage
 
-1. Create a .env file based on the .env.example file
+1. Create a `.env` file based on the `.env.example` file
 2. Run `yarn dev` to start the development server
 
 ### Custom network
 
-To add a new network, add an entrey to the `networks` object in `src/domains/Network/api/networks.ts`.
+To add a new network, add an entry to the `networks` object in `src/domains/Network/api/networks.ts`.
 
 ## Features
 

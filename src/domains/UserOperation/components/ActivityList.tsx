@@ -10,7 +10,7 @@ export const ActivityList = ({ activities }: Props) => {
     return (
       <InfoMessage
         title="No activity to show"
-        desc="Claim some tokens and start playing around with the Playground Wallet"
+        desc="Claim some tokens and start playing around with the Sandbox Wallet"
       />
     );
   }
@@ -34,7 +34,7 @@ export const ActivityList = ({ activities }: Props) => {
   ) : (
     <InfoMessage
       title="No activity to show"
-      desc="Claim some tokens and start playing around with the Playground Wallet"
+      desc="Claim some tokens and start playing around with the Sandbox Wallet"
     />
   );
 };

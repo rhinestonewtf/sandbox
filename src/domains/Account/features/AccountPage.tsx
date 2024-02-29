@@ -11,7 +11,7 @@ import {
 } from "@/src/domains/Account/components";
 import { ActivityList } from "../../UserOperation/components";
 import { useGetAccountActivity } from "../../UserOperation/api/getAddressActivity";
-import { PlaygroundBanner } from "../components/PlaygroundBanner";
+import { SanboxBanner } from "../components/SanboxBanner";
 
 type sideViewState = {
   type: "closed" | "send" | "receive";
@@ -51,7 +51,7 @@ export function AccountPage() {
 
         <div className="my-16">
           <div className="mt-6" />
-          <PlaygroundBanner />
+          <SanboxBanner />
         </div>
 
         <div className="my-16">
