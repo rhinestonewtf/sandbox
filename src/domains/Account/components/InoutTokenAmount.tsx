@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { InputAmount } from "@/src/ui-kit/Input";
-import { useActiveAccount } from "../../Account/hooks";
+import { useActiveAccount } from "../hooks";
 
 type Props = {
   label: string;

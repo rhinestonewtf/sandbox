@@ -48,6 +48,5 @@ For guidance on how to create PRs, see the [CONTRIBUTING](./CONTRIBUTING.md) gui
   <tr>
    <td align="center"><a href="https://twitter.com/abstractooor"><img src="https://avatars.githubusercontent.com/u/26718079" width="100px;" alt=""/><br /><sub><b>Konrad</b></sub></a><br /><a href="https://github.com/rhinestonewtf/modulekit-ui-playground/commits?author=kopy-kat" title="Code">💻</a> </td>
     <td align="center"><a href="https://github.com/YasseinBilal"><img src="https://avatars.githubusercontent.com/u/9385005?v=4" width="100px;" alt=""/><br /><sub><b>Yassin</b></sub></a><br /><a href="https://github.com/rhinestonewtf/modulekit-ui-playground/commits?author=YasseinBilal" title="Code">💻</a></td>
-    
   </tr>
 </table>
