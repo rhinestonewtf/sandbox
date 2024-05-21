@@ -42,7 +42,10 @@
     "typescript": "^5"
   },
   "homepage": "https://docs.rhinestone.wtf/sandbox",
-  "repository": "github:rhinestonewtf/sandbox",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rhinestonewtf/sandbox.git"
+  },
   "bugs": {
     "url": "https://github.com/rhinestonewtf/sandbox/issues"
   },
