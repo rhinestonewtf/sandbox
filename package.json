@@ -1,12 +1,11 @@
 {
-  "name": "modulekit-ui-playground",
+  "name": "@rhinestone/sandbox",
   "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+  "description": "A frontend playground building and testing smart account modules",
+  "license": "GPL-3.0",
+  "author": {
+    "name": "Rhinestone",
+    "url": "https://rhinestone.wtf"
   },
   "dependencies": {
     "@apollo/client": "^3.8.9",
@@ -41,5 +40,18 @@
     "postcss": "^8",
     "tailwindcss": "^3.3.0",
     "typescript": "^5"
+  },
+  "homepage": "https://docs.rhinestone.wtf/sandbox",
+  "repository": "github:rhinestonewtf/sandbox",
+  "bugs": {
+    "url": "https://github.com/rhinestonewtf/sandbox/issues"
+  },
+  "keywords": [
+    "account abstraction",
+    "smart account modules",
+    "sandbox"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }
