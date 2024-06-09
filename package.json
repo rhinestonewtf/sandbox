@@ -7,6 +7,13 @@
     "name": "Rhinestone",
     "url": "https://rhinestone.wtf"
   },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc"
+  },
   "dependencies": {
     "@apollo/client": "^3.8.9",
     "@github/webauthn-json": "^2.1.1",
