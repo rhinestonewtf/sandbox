@@ -9,7 +9,7 @@ import { Network } from "@/src/domains/Network";
 import { mainnet, sepolia, Chain } from "wagmi/chains";
 import { WagmiProvider, createConfig, http } from "wagmi";
 import { networks } from "@/src/domains/Network/api/networks";
-import { walletConnect, coinbaseWallet } from "wagmi/connectors";
+import { coinbaseWallet } from "wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PendingTransaction } from "@/src/domains/Transaction/Transaction";
 import { PendingUserOperation } from "@/src/domains/UserOperation/UserOperation";

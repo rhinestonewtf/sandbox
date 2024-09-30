@@ -1,29 +1,42 @@
-import { Address, isAddress } from 'viem'
-import { fetchBalance } from '@wagmi/core'
-import { ERC20Token } from '../ERC20Token'
-import { AccountBalance } from '@/src/domains/Account'
+import { getBalance } from "@wagmi/core";
+import { Address, isAddress } from "viem";
+import { ERC20Token } from "../ERC20Token";
+import { Network } from "@/src/domains/Network";
+import { getTokenDisplayValue } from "../../helpers";
+import { AccountBalance } from "@/src/domains/Account";
+import { getConfig } from "@/src/domains/Network/helpers/getConfig";
 
 type Params = {
-  token?: ERC20Token
-  accountBalance?: AccountBalance
-  accountAddress: string
-}
+  token?: ERC20Token;
+  tokenBalance?: string;
+  accountBalance?: AccountBalance;
+  accountAddress: string;
+  activeNetwork: Network;
+};
 
 export const getFormattedTokenBalance = async ({
   accountBalance,
   token,
+  tokenBalance,
   accountAddress,
+  activeNetwork,
 }: Params) => {
+  const config = getConfig(activeNetwork);
   if (token && isAddress(token.token_address)) {
-    const balance = await fetchBalance({
+    const balance = await getBalance(config, {
       token: token.token_address,
-      chainId: token.chainId,
+      chainId: token.chainId as any,
       address: accountAddress as Address,
-    })
-    return `${Number(balance.formatted).toFixed(2)} ${token.symbol}`
+    });
+
+    return `${getTokenDisplayValue({
+      balance: String(
+        tokenBalance || Number(balance.value) / 10 ** balance.decimals
+      ),
+    })} ${token.symbol}`;
   }
   if (accountBalance) {
-    return `${accountBalance.balance} ${accountBalance.symbol}`
+    return `${tokenBalance || accountBalance.balance} ${accountBalance.symbol}`;
   }
-  return '0'
-}
+  return "0";
+};

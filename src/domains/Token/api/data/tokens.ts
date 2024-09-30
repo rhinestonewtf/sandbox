@@ -72,4 +72,22 @@ export const ERC20Tokens = [
     logoURI:
       "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
+  {
+    name: "USDC Token",
+    token_address: "0x8034e69FAFEd6588cc36ff3400AFE5c049a3B92E",
+    symbol: "USDC",
+    decimals: 6,
+    chainId: 84532,
+    logoURI:
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+  },
+  {
+    name: "USDT Token",
+    token_address: "0x3520ef0E951125dEfA8476946d6D3153fd07b346",
+    symbol: "USDT",
+    decimals: 6,
+    chainId: 84532,
+    logoURI:
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+  },
 ];
