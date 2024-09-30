@@ -20,9 +20,9 @@ export const LoginView = ({ onLoginClick }: Props) => {
         smart wallet
       </div>
 
-      <p className="font-mono text-mono uppercase text-gray-800 mt-[28px] mb-[32px]">
+      <div className="font-mono text-mono uppercase text-gray-800 mt-[28px] mb-[32px]">
         Create an account to get started
-      </p>
+      </div>
       <div className="flex flex-col gap-6">
         <LargeButton
           className="bg-primary hover:bg-primary border-none"

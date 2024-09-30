@@ -33,6 +33,7 @@ export const OnboardingCompletedView = ({ onBackClick }: Props) => {
     if (webauthnCredential || walletSigner) {
       try {
         const { data } = await createAccount();
+        console.log(data);
         const updatedActiveAccount = {
           ...activeAccount,
           ...data,
@@ -48,6 +49,7 @@ export const OnboardingCompletedView = ({ onBackClick }: Props) => {
         );
         localStorage.removeItem(`webauthnCredential`);
         localStorage.removeItem(`signer`);
+        console.log(updatedActiveAccount);
         router.push("/");
       } catch (err) {
         console.log(err);
@@ -61,7 +63,8 @@ export const OnboardingCompletedView = ({ onBackClick }: Props) => {
         className="absolute left-0 top-0 flex items-center gap-2 hover:cursor-pointer"
         onClick={onBackClick}
       >
-        <BackIcon /> <p className="text-neutral-dark font-mono text-xs">BACK</p>
+        <BackIcon />{" "}
+        <div className="text-neutral-dark font-mono text-xs">BACK</div>
       </div>
       <Image
         alt=""

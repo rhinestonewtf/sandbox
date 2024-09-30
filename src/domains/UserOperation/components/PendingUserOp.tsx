@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
-import { AssetsIcon } from '@/src/ui-kit'
+import { ReactNode } from "react";
+import { AssetsIcon } from "@/src/ui-kit";
 
 type Props = {
-  name: string
-  icon?: ReactNode
-}
+  name: string;
+  icon?: ReactNode;
+};
 
 export const PendingUserOp = ({ name, icon }: Props) => (
   <div className={`flex gap-4 border-slate-200 rounded-lg p-4 bg-white`}>
@@ -19,9 +19,9 @@ export const PendingUserOp = ({ name, icon }: Props) => (
 
     <div className="flex-1">
       <div className="flex flex-col gap-2">
-        <p className="text-left text-sm text-slate-700">{name}</p>
-        <p className="text-sm font-bold text-slate-500">Processing..</p>
+        <div className="text-left text-sm text-slate-700">{name}</div>
+        <div className="text-sm font-bold text-slate-500">Processing..</div>
       </div>
     </div>
   </div>
-)
+);

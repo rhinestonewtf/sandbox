@@ -1,15 +1,15 @@
-'use client'
+"use client";
 
 type Props = {
-  title: React.ReactNode
-  value?: React.ReactNode
-  subTitle?: React.ReactNode
-  subValue?: React.ReactNode
-  imageUrl?: string
-  icon?: React.ReactNode
-  className?: string
-  onClick?: () => void
-}
+  title: React.ReactNode;
+  value?: React.ReactNode;
+  subTitle?: React.ReactNode;
+  subValue?: React.ReactNode;
+  imageUrl?: string;
+  icon?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+};
 
 export const Item = ({
   title,
@@ -23,7 +23,7 @@ export const Item = ({
 }: Props) => (
   <div
     className={`flex gap-4 border border-slate-200 rounded-lg items-center justify-center join-item w-full p-4 ${className} ${
-      onClick && 'hover:cursor-pointer hover:bg-slate-100'
+      onClick && "hover:cursor-pointer hover:bg-slate-100"
     }`}
     onClick={onClick}
   >
@@ -31,9 +31,9 @@ export const Item = ({
     {icon && <div>{icon}</div>}
     <div className="flex-1">
       <div className="flex flex-col gap-1">
-        <p className="text-left text-sm font-normal text-neutral-dark font-oatmealProMedium">
+        <div className="text-left text-sm font-normal text-neutral-dark font-oatmealProMedium">
           {title}
-        </p>
+        </div>
         {subTitle && <div>{subTitle}</div>}
       </div>
     </div>
@@ -44,4 +44,4 @@ export const Item = ({
       {subValue && <div>{subValue}</div>}
     </div>
   </div>
-)
+);

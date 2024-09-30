@@ -11,12 +11,12 @@ export const SanboxBanner = () => {
           src="/modules.png"
           className="rounded-2xl"
         />
-        <p className="text-neutral-dark text-2xl font-medium font-oatmealProMedium mt-6">
+        <div className="text-neutral-dark text-2xl font-medium font-oatmealProMedium mt-6">
           Introducing Rhinestone Sandbox
-        </p>
-        <p className="text-neutral-dark opacity-40 text-2xl font-normal">
+        </div>
+        <div className="text-neutral-dark opacity-40 text-2xl font-normal">
           Build and test smart account modules
-        </p>
+        </div>
       </div>
     </div>
   );

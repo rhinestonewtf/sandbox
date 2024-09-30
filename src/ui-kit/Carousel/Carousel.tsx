@@ -1,36 +1,36 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react";
 
 export function Carousel({
   autoSlide = false,
   autoSlideInterval = 3000,
   slides,
 }: {
-  autoSlide?: boolean
-  autoSlideInterval?: number
+  autoSlide?: boolean;
+  autoSlideInterval?: number;
   slides: {
-    title: string
-    description: string
-    label?: string
-    subLabel?: string
-    imageUrl: string
-    ctaText: string
-    onCtaClick: (index: number) => void
-  }[]
+    title: string;
+    description: string;
+    label?: string;
+    subLabel?: string;
+    imageUrl: string;
+    ctaText: string;
+    onCtaClick: (index: number) => void;
+  }[];
 }) {
-  const [curr, setCurr] = useState(0)
+  const [curr, setCurr] = useState(0);
 
   const prev = () =>
-    setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1))
+    setCurr((curr) => (curr === 0 ? slides.length - 1 : curr - 1));
   const next = () =>
-    setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1))
+    setCurr((curr) => (curr === slides.length - 1 ? 0 : curr + 1));
 
   useEffect(() => {
-    if (!autoSlide) return
-    const slideInterval = setInterval(next, autoSlideInterval)
-    return () => clearInterval(slideInterval)
-  }, [])
+    if (!autoSlide) return;
+    const slideInterval = setInterval(next, autoSlideInterval);
+    return () => clearInterval(slideInterval);
+  }, []);
 
   return (
     <div className="relative">
@@ -49,13 +49,13 @@ export function Carousel({
                       className="w-full h-[360px] object-cover rounded-[20px]"
                     />
                     <div className="absolute left-2 text-white bottom-24">
-                      <p className="text-heading-2">{slide.label}</p>
-                      <p className="text-paragraph">{slide.subLabel}</p>
+                      <div className="text-heading-2">{slide.label}</div>
+                      <div className="text-paragraph">{slide.subLabel}</div>
                     </div>
 
                     <div
                       className="flex absolute bottom-0 bg-white bg-opacity-80 backdrop-blur-[80px] mb-2 rounded-2xl p-3"
-                      style={{ width: '98%' }}
+                      style={{ width: "98%" }}
                     >
                       <div className="flex flex-1 gap-3">
                         <div>
@@ -93,7 +93,7 @@ export function Carousel({
                   onClick={() => setCurr(i)}
                   className={`
               transition-all w-full h-1 bg-white hover:cursor-pointer
-              ${curr !== i && 'bg-opacity-50'}
+              ${curr !== i && "bg-opacity-50"}
               
             `}
                 />
@@ -103,5 +103,5 @@ export function Carousel({
         </div>
       </div>
     </div>
-  )
+  );
 }

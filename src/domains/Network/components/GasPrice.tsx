@@ -2,22 +2,27 @@
 
 import { Button } from "@/src/ui-kit";
 import { useGetFeeData } from "../api/getGasPrice";
+import { formatAmount } from "../../Token/ERC20Token/helpers";
 
 type Props = {
   className?: string;
 };
 
 export const GasPrice = ({ className }: Props) => {
-  const { data: feeData, refetch: fetchFeeData, isLoading } = useGetFeeData();
+  const { data: gasPrice, refetch: fetchFeeData, isLoading } = useGetFeeData();
 
-  if (feeData)
+  if (gasPrice)
     return (
       <Button
         onClick={fetchFeeData}
         isLoading={isLoading}
-        className={`bg-background rounded-lg shadow-none hover:bg-transparent ${className}`}
+        className={`bg-background rounded-lg hover:bg-transparent ${className}`}
       >
-        {feeData?.formatted.gasPrice?.slice(0, 3)} GWEI
+        {formatAmount({
+          amount: Number(gasPrice),
+          decimals: 2,
+        })}{" "}
+        GWEI
       </Button>
     );
 

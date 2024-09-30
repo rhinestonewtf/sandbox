@@ -1,74 +1,75 @@
-import { zeroAddress } from 'viem'
+import { zeroAddress } from "viem";
 
 export const allTokens = [
   {
-    name: 'MATIC',
-    token_address: 'MATIC',
-    symbol: 'MATIC',
+    name: "ETH",
+    token_address: "ETH",
+    symbol: "ETH",
     decimals: 18,
-    chainId: 80001,
+    chainId: 11_155_111,
     logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
   {
-    name: 'Wrapped Ether',
-    token_address: '0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa',
-    symbol: 'WETH',
+    name: "Wrapped Ether",
+    token_address: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
+    symbol: "WETH",
     decimals: 18,
-    chainId: 80001,
+    chainId: 11_155_111,
     logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
   {
-    name: 'Wrapped Matic',
-    token_address: '0x9c3c9283d3e44854697cd22d3faa240cfb032889',
-    symbol: 'WMATIC',
+    name: "ETH",
+    token_address: "ETH",
+    symbol: "ETH",
     decimals: 18,
-    chainId: 80001,
+    chainId: 84532,
     logoURI:
-      'https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png?1624446912',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
-]
+];
 
 export const nativeCoins = [
   {
-    name: 'MATIC',
-    token_address: 'MATIC',
-    symbol: 'MATIC',
+    name: "SEPOLIA Ether",
+    token_address: "ETH",
+    symbol: "ETH",
+    balance: "0",
     decimals: 18,
-    chainId: 80001,
+    chainId: 11_155_111,
     logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
-]
+  {
+    name: "SEPOLIA Ether",
+    token_address: "ETH",
+    symbol: "ETH",
+    balance: "0",
+    decimals: 18,
+    chainId: 84532,
+    logoURI:
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
+  },
+];
 
 export const ERC20Tokens = [
   {
-    name: 'Wrapped Ether',
-    token_address: '0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa',
-    symbol: 'WETH',
-    decimals: 18,
-    chainId: 80001,
+    name: "USDC Token",
+    token_address: "0x2c4fa163b4c1A4F065D5135684E69820E101d1B7",
+    symbol: "USDC",
+    decimals: 6,
+    chainId: 11_155_111,
     logoURI:
-      'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
   {
-    name: 'Wrapped Matic',
-    token_address: '0x9c3c9283d3e44854697cd22d3faa240cfb032889',
-    symbol: 'WMATIC',
-    decimals: 18,
-    chainId: 80001,
+    name: "USDT Token",
+    token_address: "0xCcf531c416016518cB59EeF0f0Af51E8B44C7469",
+    symbol: "USDT",
+    decimals: 6,
+    chainId: 11_155_111,
     logoURI:
-      'https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png?1624446912',
+      "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
   },
-]
-
-export const AnyERC20Token = {
-  name: 'Any ERC20 Token',
-  token_address: zeroAddress,
-  symbol: 'Any ERC20 Token',
-  decimals: 18,
-  chainId: 80001,
-  logoURI:
-    'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
-}
+];

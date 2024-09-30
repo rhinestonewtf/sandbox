@@ -1,22 +1,22 @@
 type Props = {
-  title: string
-  value: React.ReactNode
-  label?: React.ReactNode
-  subLabel?: React.ReactNode
-  placeHolder?: string
-  variant?: 'text' | 'number'
-  prefix?: string
-  onChange: (value: string) => void
-}
+  title: string;
+  value: React.ReactNode;
+  label?: React.ReactNode;
+  subLabel?: React.ReactNode;
+  placeHolder?: string;
+  variant?: "text" | "number";
+  prefix?: string;
+  onChange: (value: string) => void;
+};
 
 export const InputText = ({
   title,
   value,
   label,
   subLabel,
-  variant = 'text',
-  placeHolder = '',
-  prefix = '',
+  variant = "text",
+  placeHolder = "",
+  prefix = "",
   onChange,
 }: Props) => {
   return (
@@ -30,7 +30,7 @@ export const InputText = ({
         <div className="leading-none">{label}</div>
       </div>
       <div className="flex items-center justify-center box-border leading-none">
-        {prefix && <p className="text-lg text-slate-400">{prefix}</p>}
+        {prefix && <div className="text-lg text-slate-400">{prefix}</div>}
         <input
           type={variant}
           placeholder={placeHolder}
@@ -41,5 +41,5 @@ export const InputText = ({
         {subLabel && <div>{subLabel}</div>}
       </div>
     </div>
-  )
-}
+  );
+};

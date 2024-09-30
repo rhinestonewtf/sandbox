@@ -1,8 +1,8 @@
-import { BackIcon } from '@/src/ui-kit'
+import { BackIcon } from "@/src/ui-kit";
 
 type Props = {
-  onClick: () => void
-}
+  onClick: () => void;
+};
 
 export const BackButton = ({ onClick }: Props) => {
   return (
@@ -11,7 +11,7 @@ export const BackButton = ({ onClick }: Props) => {
       onClick={onClick}
     >
       <BackIcon />
-      <p className="text-neutral-dark font-mono text-xs">BACK</p>
+      <div className="text-neutral-dark font-mono text-xs">BACK</div>
     </div>
-  )
-}
+  );
+};
