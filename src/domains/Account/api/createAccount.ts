@@ -79,18 +79,12 @@ function getInitializationData(
   initialValidators: InitialModule[],
   initialExecutors: InitialModule[] = [],
   initialHook: InitialModule = EmptyInitialModule,
-  initialFallback: InitialModule = EmptyInitialModule
+  initialFallbacks: InitialModule[] = []
 ): Hex {
-  if (initialFallback == EmptyInitialModule) {
-    initialFallback = {
-      module: contractDependencies.EXTENSIBLE_FALLBACK_HANDLER_ADDRESS,
-      data: "0x",
-    };
-  }
   const initCallData = encodeFunctionData({
-    abi: Bootstrap.abi,
+    abi: Bootstrap,
     functionName: "initMSA",
-    args: [initialValidators, initialExecutors, initialHook, initialFallback],
+    args: [initialValidators, initialExecutors, initialHook, initialFallbacks],
   });
   return encodeAbiParameters(
     [
@@ -108,7 +102,7 @@ export function getInitializationDataFromInitcode(initCode: Hex): {
   initialFallback: InitialModule;
 } {
   const { args: initCodeArgs } = decodeFunctionData({
-    abi: AccountFactory.abi,
+    abi: AccountFactory,
     data: slice(initCode, 20),
   });
 
@@ -125,7 +119,7 @@ export function getInitializationDataFromInitcode(initCode: Hex): {
   );
 
   const { args: initCallDataArgs } = decodeFunctionData({
-    abi: Bootstrap.abi,
+    abi: Bootstrap,
     data: initCallData[1],
   });
 
@@ -151,7 +145,7 @@ export async function getAccountAddress(
 
   return (await publicClient.readContract({
     address: factoryAddress,
-    abi: AccountFactory.abi,
+    abi: AccountFactory,
     functionName: "getAddress",
     args: [salt, initializationData],
   })) as Address;
@@ -164,7 +158,7 @@ type GetAccoutParams = {
   initialValidators: InitialModule[];
   initialExecutors?: InitialModule[];
   initialHook?: InitialModule;
-  initialFallback?: InitialModule;
+  initialFallbacks?: InitialModule[];
 };
 
 export async function getAccount({
@@ -174,14 +168,14 @@ export async function getAccount({
   initialValidators,
   initialExecutors,
   initialHook = EmptyInitialModule,
-  initialFallback = EmptyInitialModule,
+  initialFallbacks,
 }: GetAccoutParams) {
   const initializationData = getInitializationData(
     contractDependencies,
     initialValidators,
     initialExecutors,
     initialHook,
-    initialFallback
+    initialFallbacks
   );
   const address = await getAccountAddress(
     network,
@@ -194,7 +188,7 @@ export async function getAccount({
     [
       contractDependencies.ACCOUNT_FACTORY_ADDRESS,
       encodeFunctionData({
-        abi: AccountFactory.abi,
+        abi: AccountFactory,
         functionName: "createAccount",
         args: [salt, initializationData],
       }),

@@ -2,20 +2,36 @@ import { Network } from "../../Network";
 import { Account } from "../../Account";
 import { Validator } from "../../Module/Module";
 import { getBundlerClient } from "@/src/utils/userOps";
+import { validators } from "@/src/constants/contracts";
 import { getPublicClient } from "../../Network/helpers";
+import { EntryPoint } from "permissionless/_types/types";
 import AccountInterface from "@/src/constants/abis/Account.json";
-import { Address, Hex, encodeFunctionData, encodeAbiParameters } from "viem";
 import {
   UserOperation,
   getAccountNonce,
   getUserOperationHash,
 } from "permissionless";
 import {
+  Hex,
+  concat,
+  encodeAbiParameters,
+  encodeFunctionData,
+  encodePacked,
+  pad,
+  slice,
+  toHex,
+} from "viem";
+import {
   TransactionDetailsForUserOp,
   UserOperationStruct,
   ExecuteAction,
 } from "@/src/domains/UserOperation/UserOperation";
 import { contracts } from "@/src/constants/contracts";
+
+export const CALL_TYPE = {
+  SINGLE: "0x0000000000000000000000000000000000000000000000000000000000000000",
+  BATCH: "0x0100000000000000000000000000000000000000000000000000000000000000",
+};
 
 type createAndSubmitUserOpParams = {
   actions: ExecuteAction[];
@@ -50,49 +66,56 @@ export async function createUnsignedUserOp(
   nonce: BigInt,
   activeAccount: Account,
   chosenValidator: Validator
-): Promise<UserOperationStruct> {
+): Promise<UserOperation<"v0.7">> {
   const callData = await encodeUserOpCallData(info);
   const initCode = await getUserOpInitCode(network, activeAccount);
 
   const publicClient = getPublicClient(network);
   const currentNonce = await getAccountNonce(publicClient, {
     sender: activeAccount.address,
-    entryPoint: contracts.ENTRY_POINT_ADDRESS,
-    key: BigInt(chosenValidator.address),
+    entryPoint: contracts.ENTRY_POINT_ADDRESS as EntryPoint,
+    key: BigInt(pad(chosenValidator.address, { dir: "right", size: 24 }) || 0),
   });
 
-  const partialUserOp: any = {
+  const partialUserOp: UserOperation<"v0.7"> = {
     sender: activeAccount.address,
     // @dev mock nonce used for estimating gas
     // @dev using the latest nonce will revert during estimation
     nonce: currentNonce,
-    initCode: initCode,
+    // initCode: initCode,
     callData: callData,
-    paymasterAndData: "0x",
     // @dev mock signature used for estimating gas
     signature: chosenValidator.mockSignature,
+    factory: initCode == "0x" ? undefined : slice(initCode, 0, 20),
+    factoryData: initCode == "0x" ? undefined : slice(initCode, 20),
+    maxFeePerGas: BigInt(0),
+    maxPriorityFeePerGas: BigInt(0),
+    preVerificationGas: BigInt(0),
+    verificationGasLimit: BigInt(0),
+    callGasLimit: BigInt(0),
   };
 
   const bundlerClient = getBundlerClient(network);
+
   const gasPriceResult = await bundlerClient.getUserOperationGasPrice();
-  partialUserOp.maxFeePerGas = gasPriceResult.standard.maxFeePerGas;
-  partialUserOp.maxPriorityFeePerGas =
-    gasPriceResult.standard.maxPriorityFeePerGas;
+
+  partialUserOp.maxFeePerGas = gasPriceResult.fast.maxFeePerGas;
+  partialUserOp.maxPriorityFeePerGas = gasPriceResult.fast.maxPriorityFeePerGas;
 
   const gasEstimate = await bundlerClient.estimateUserOperationGas({
     userOperation: partialUserOp,
-    entryPoint: contracts.ENTRY_POINT_ADDRESS,
   });
 
   partialUserOp.preVerificationGas = gasEstimate.preVerificationGas;
   partialUserOp.verificationGasLimit = gasEstimate.verificationGasLimit;
+
   partialUserOp.callGasLimit = gasEstimate.callGasLimit;
 
   // reset signature
-  partialUserOp.signature = "";
+  partialUserOp.signature = "" as Hex;
 
   // add correct nonce
-  partialUserOp.nonce = nonce;
+  partialUserOp.nonce = nonce as bigint;
 
   return {
     ...partialUserOp,
@@ -100,33 +123,33 @@ export async function createUnsignedUserOp(
 }
 
 export async function signUserOp(
-  userOp: UserOperationStruct,
+  userOp: UserOperation<"v0.7">,
   network: Network,
   activeAccount: Account,
   chosenValidator: Validator
-): Promise<UserOperationStruct> {
+): Promise<UserOperation<"v0.7">> {
   const userOpHash = getUserOperationHash({
     userOperation: userOp,
     chainId: network.id,
-    entryPoint: contracts.ENTRY_POINT_ADDRESS,
+    entryPoint: contracts.ENTRY_POINT_ADDRESS as EntryPoint,
   });
-  const signature = await chosenValidator.signMessageAsync(
+
+  userOp.signature = await chosenValidator.signMessageAsync(
     userOpHash,
     activeAccount
   );
-  userOp.signature = signature;
+
   return userOp;
 }
 
 export async function submitUserOpToBundler(
-  userOp: UserOperation,
+  userOp: UserOperation<"v0.7">,
   network: Network,
   activeAccount: Account
 ): Promise<string> {
   const bundlerClient = getBundlerClient(network);
   return await bundlerClient.sendUserOperation({
     userOperation: userOp,
-    entryPoint: contracts.ENTRY_POINT_ADDRESS,
   });
 }
 
@@ -141,13 +164,45 @@ export async function encodeUserOpCallData(
     return encodeFunctionData({
       functionName: "execute",
       abi: AccountInterface.abi,
-      args: [target, value, callData],
+      args: [
+        CALL_TYPE.SINGLE,
+        encodePacked(
+          ["address", "uint256", "bytes"],
+          [target, BigInt(Number(value)), callData]
+        ),
+      ],
     });
   } else {
     return encodeFunctionData({
-      functionName: "executeBatch",
+      functionName: "execute",
       abi: AccountInterface.abi,
-      args: [actions],
+      args: [
+        CALL_TYPE.BATCH,
+        encodeAbiParameters(
+          [
+            {
+              components: [
+                {
+                  name: "target",
+                  type: "address",
+                },
+                {
+                  name: "value",
+                  type: "uint256",
+                },
+                {
+                  name: "callData",
+                  type: "bytes",
+                },
+              ],
+              name: "Execution",
+              type: "tuple[]",
+            },
+          ],
+          // @ts-ignore
+          [actions]
+        ),
+      ],
     });
   }
 }

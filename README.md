@@ -11,13 +11,13 @@
 ### Installation
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ### Usage
 
 1. Create a `.env` file based on the `.env.example` file
-2. Run `yarn dev` to start the development server
+2. Run `pnpm dev` to start the development server
 
 ### Custom network
 

@@ -35,7 +35,6 @@ export function AccountPage() {
         return "";
     }
   };
-
   return (
     <>
       <div className="pb-8">

@@ -1,18 +1,16 @@
 "use client";
 import { useEffect } from "react";
+import { useModal } from "connectkit";
+import { useAccount } from "wagmi";
 import { LargeButton, WalletConnectIcon } from "../ui-kit";
-import { useAccount, useNetwork, useSignMessage } from "wagmi";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 type Props = {
   onLoginClick: () => void;
 };
 
 export const WalletConnectBtn = ({ onLoginClick }: Props) => {
-  const { signMessageAsync } = useSignMessage();
-  const { chain } = useNetwork();
-  const { address, isConnected } = useAccount();
-  const { openConnectModal, connectModalOpen: open } = useConnectModal();
+  const { isConnected } = useAccount();
+  const { setOpen, open } = useModal();
 
   const handleLogin = async () => {
     onLoginClick();
@@ -29,7 +27,7 @@ export const WalletConnectBtn = ({ onLoginClick }: Props) => {
       icon={<WalletConnectIcon />}
       onClick={() => {
         if (!isConnected) {
-          openConnectModal ? openConnectModal() : null;
+          setOpen(true);
         } else {
           handleLogin();
         }

@@ -1,8 +1,9 @@
 import { Hex } from "viem";
-import { signMessage } from "@wagmi/core";
 import { Account } from "../domains/Account";
 import { Validator } from "../domains/Module/Module";
 import { signUserOpHash } from "../domains/UserOperation/api/signUserOp";
+import { signMessage } from "@wagmi/core";
+import { wagmiConfig } from "../app/(app)/Providers";
 
 export type ContractDependencies = {
   [name: string]: Hex;
@@ -15,11 +16,11 @@ export type ValidatorList = {
 export const validators: ValidatorList = {
   ecdsa: {
     name: "ecdsa",
-    address: "0xf83d07238a7c8814a48535035602123ad6dbfa63",
+    address: "0x19826F42C27961355b652daAC8282b85BD5b1cF9",
     mockSignature:
       "0xe8b94748580ca0b4993c9a1b86b5be851bfc076ff5ce3a1ff65bf16392acfcb800f9b4f1aef1555c7fce5599fffb17e7c635502154a0333ba21f3ae491839af51c",
     signMessageAsync: async (message: Hex, activeAccount: Account) => {
-      return await signMessage({ message });
+      return await signMessage(wagmiConfig, { message: { raw: message } });
     },
   },
   webauthn: {
@@ -35,17 +36,15 @@ export const validators: ValidatorList = {
 
 export const contracts: ContractDependencies = {
   // CORE
-  ENTRY_POINT_ADDRESS: "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
-  ACCOUNT_FACTORY_ADDRESS: "0xFf81C1C2075704D97F6806dE6f733d6dAF20c9c6",
-  SINGLETON_ADDRESS: "0x76104AE8aeCfc3aEC2AA6587b4790043d3612c47",
-  REGISTRY_ADDRESS: "0x500684cBaa280aDf80d5ACf7A32Daebb23162e63",
+  ENTRY_POINT_ADDRESS: "0x0000000071727De22E5E9d8BAf0edAc6f37da032",
+  ACCOUNT_FACTORY_ADDRESS: "0xDC15682AEDba36Cf3121507993b50Ef22b457053",
+  SINGLETON_ADDRESS: "0xa951A1179bA8bd08b8140aB9dc7910AF08AE7181",
+  REGISTRY_ADDRESS: "0x000000000069E2a187AEFFb852bF3cCdC95151B2",
 
   // MODULES
-  ECDSA_VALIDATOR_ADDRESS: "0xf83d07238a7c8814a48535035602123ad6dbfa63", // ownable validator
+  ECDSA_VALIDATOR_ADDRESS: "0x19826F42C27961355b652daAC8282b85BD5b1cF9", // ownable validator
   WEBAUTHN_VALIDATOR_ADDRESS: "0xB236CDE7e68431D874FD90E10b1910af5DC45DAc",
-  EXTENSIBLE_FALLBACK_HANDLER_ADDRESS:
-    "0x42555fEEf301829f84fC1af182f3dAF827De9c6f",
 
   // UTILITIES
-  BOOTSTRAP_ADDRESS: "0x5e9F3feeC2AA6706DF50de955612D964f115523B",
+  BOOTSTRAP_ADDRESS: "0x1E919660050C68BFEf868945Cf5f9a26ad7E360b",
 };

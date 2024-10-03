@@ -1,18 +1,17 @@
 "use client";
-import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { Hex } from "viem";
-import * as allChains from "viem/chains";
 import { useState } from "react";
+import { Address, Hex } from "viem";
+import * as allChains from "viem/chains";
+import { injected } from "wagmi/connectors";
+import { ConnectKitProvider } from "connectkit";
 import { Account } from "@/src/domains/Account";
 import { Network } from "@/src/domains/Network";
-import { publicProvider } from "wagmi/providers/public";
-import { infuraProvider } from "wagmi/providers/infura";
+import { mainnet, sepolia, Chain } from "wagmi/chains";
+import { WagmiProvider, createConfig, http } from "wagmi";
 import { networks } from "@/src/domains/Network/api/networks";
-// import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { coinbaseWallet } from "wagmi/connectors";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PendingTransaction } from "@/src/domains/Transaction/Transaction";
-import { WagmiConfig, createConfig, configureChains, Address } from "wagmi";
 import { PendingUserOperation } from "@/src/domains/UserOperation/UserOperation";
 import {
   ActiveAccountContext,
@@ -24,6 +23,36 @@ import {
 } from "@/src/context";
 
 type Props = { children: React.ReactNode };
+
+const chainList: Chain[] = [];
+
+for (const chainName in allChains) {
+  // Check if the property is not inherited from the prototype chain
+  if (Object.prototype.hasOwnProperty.call(allChains, chainName)) {
+    // @ts-ignore
+    chainList.push(allChains[chainName]);
+  }
+}
+
+export const wagmiConfig = createConfig({
+  // @ts-ignore
+  chains: [...chainList],
+  transports: {
+    [mainnet.id]: http(),
+    [sepolia.id]: http(),
+    [allChains.baseSepolia.id]: http(),
+  },
+  connectors: [
+    injected({ target: "metaMask" }),
+    coinbaseWallet({
+      appName: "Rhinestone",
+      headlessMode: true,
+    }),
+    // walletConnect({
+    //   projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
+    // }),
+  ],
+});
 
 export const Providers = ({ children }: Props) => {
   const [activeNetwork, setActiveNetwork] = useState<Network>(networks[0]);
@@ -50,33 +79,12 @@ export const Providers = ({ children }: Props) => {
     },
   });
 
-  const { chains, publicClient } = configureChains(
-    [...Object.values(allChains), ...networks],
-    [
-      publicProvider(),
-      infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_API_KEY! }),
-    ]
-  );
-
   const queryClient = new QueryClient();
 
-  const { connectors } = getDefaultWallets({
-    appName: "Rhinestone Playground",
-    projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
-    chains,
-  });
-
-  const wagmiConfig = createConfig({
-    autoConnect: true,
-
-    connectors,
-    publicClient,
-  });
-
   return (
-    <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-        <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <WagmiProvider config={wagmiConfig}>
+        <ConnectKitProvider>
           <ActiveAccountContext.Provider
             value={{ activeAccount, setActiveAccount }}
           >
@@ -106,8 +114,10 @@ export const Providers = ({ children }: Props) => {
               </IsUserOpInProgressContext.Provider>
             </ActiveNetworkContext.Provider>
           </ActiveAccountContext.Provider>
-        </QueryClientProvider>
-      </RainbowKitProvider>
-    </WagmiConfig>
+        </ConnectKitProvider>
+      </WagmiProvider>
+    </QueryClientProvider>
   );
 };
+
+export default Providers;

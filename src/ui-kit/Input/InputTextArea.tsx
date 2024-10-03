@@ -1,20 +1,20 @@
 type Props = {
-  title: string
-  value: React.ReactNode
-  label?: React.ReactNode
-  subLabel?: React.ReactNode
-  placeHolder?: string
-  prefix?: string
-  onChange: (value: string) => void
-}
+  title: string;
+  value: React.ReactNode;
+  label?: React.ReactNode;
+  subLabel?: React.ReactNode;
+  placeHolder?: string;
+  prefix?: string;
+  onChange: (value: string) => void;
+};
 
 export const InputTextArea = ({
   title,
   value,
   label,
   subLabel,
-  placeHolder = '',
-  prefix = '',
+  placeHolder = "",
+  prefix = "",
   onChange,
 }: Props) => {
   return (
@@ -28,7 +28,7 @@ export const InputTextArea = ({
         <div>{label}</div>
       </div>
       <div className="flex items-center justify-center box-border">
-        {prefix && <p className="text-lg text-slate-400">{prefix}</p>}
+        {prefix && <div className="text-lg text-slate-400">{prefix}</div>}
         <textarea
           placeholder={placeHolder}
           className="min-h-8 h-32 flex-1 input w-full bg-neutral-50 focus:outline-none p-0 m-0 text-base font-normal text-neutral-dark"
@@ -38,5 +38,5 @@ export const InputTextArea = ({
         {subLabel && <div>{subLabel}</div>}
       </div>
     </div>
-  )
-}
+  );
+};

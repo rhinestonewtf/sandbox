@@ -20,20 +20,22 @@ export async function getTokens({
   const publicClient = getPublicClient(network);
   const tokens: ERC20Token[] = [];
   for (const token of ERC20Tokens) {
-    const data = (await publicClient.readContract({
-      address: token.token_address as Address,
-      abi: parseAbi([
-        "function balanceOf(address _owner) public view returns (uint256 balance)",
-      ]),
-      functionName: "balanceOf",
-      args: [account.address],
-    })) as bigint;
-    if (data && data > BigInt(0)) {
-      const _token: ERC20Token = {
-        ...token,
-        balance: String(Number(data) / 10 ** token.decimals),
-      };
-      tokens.push(_token);
+    if (token.chainId == network.id) {
+      const data = (await publicClient.readContract({
+        address: token.token_address as Address,
+        abi: parseAbi([
+          "function balanceOf(address _owner) public view returns (uint256 balance)",
+        ]),
+        functionName: "balanceOf",
+        args: [account.address],
+      })) as bigint;
+      if (data && data > BigInt(0)) {
+        const _token: ERC20Token = {
+          ...token,
+          balance: String(Number(data) / 10 ** token.decimals),
+        };
+        tokens.push(_token);
+      }
     }
   }
   return tokens;

@@ -1,5 +1,5 @@
-import { AccountPage } from '@/src/domains/Account/features'
+import { AccountPage } from "@/src/domains/Account/features";
 
 export default function Page() {
-  return <AccountPage />
+  return <AccountPage />;
 }

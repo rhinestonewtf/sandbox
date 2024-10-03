@@ -29,9 +29,9 @@ export const ReceiveView = () => {
               size={240}
               className="mt-10 overflow-hidden whitespace-pre-wrap"
             />
-            <p className="w-[240px] mt-4 break-words">
+            <div className="w-[240px] mt-4 break-words">
               {activeAccount.address}
-            </p>
+            </div>
             <Button
               className="flex items-center bg-neutral-50 w-[139px] h-[36px] btn-xs text-slate-900 font-medium gap-2 font-mono mt-[26px]"
               onClick={() =>

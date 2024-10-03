@@ -1,10 +1,10 @@
 "use client";
 
+import { useConfig } from "wagmi";
 import { Dropdown } from "@/src/ui-kit";
 import { networks } from "../api/networks";
 import { useContext, useEffect } from "react";
-import { PolygonIcon } from "@/src/ui-kit/Icons";
-import { ConnectorData, useAccount } from "wagmi";
+import { EtherIcon, PolygonIcon } from "@/src/ui-kit/Icons";
 import { ActiveNetworkContext } from "@/src/context/activeNetwork";
 
 type Props = {
@@ -16,36 +16,21 @@ const getNetworkIcon = (networkId: number) => {
   switch (networkId) {
     case 80001:
       return <PolygonIcon size={20} />;
+    case 11_155_111:
+      return <EtherIcon size={20} />;
     default:
       return null;
   }
 };
 
 export const NetworkSwitcher = ({ className, width }: Props) => {
-  const { connector: activeConnector } = useAccount();
   const { activeNetwork, setActiveNetwork } = useContext(ActiveNetworkContext);
-
-  useEffect(() => {
-    const handleConnectorUpdate = ({ account, chain }: ConnectorData) => {
-      if (chain) {
-        console.log("chain changed", chain);
-      }
-    };
-
-    if (activeConnector) {
-      activeConnector.on("change", handleConnectorUpdate);
-    }
-
-    if (!activeNetwork) {
-      setActiveNetwork(networks[0]);
-    }
-
-    return () => activeConnector?.off("change", handleConnectorUpdate) as any;
-  }, [activeConnector]);
+  const config = useConfig();
 
   return (
     <Dropdown
-      className={`dropdown-text p-2 ${className}`}
+      highlightSelected
+      className={`dropdown-end dropdown-text p-2 ${className}`}
       width={width}
       items={networks.map((network) => {
         return {

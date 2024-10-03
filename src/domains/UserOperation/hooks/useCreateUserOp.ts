@@ -7,21 +7,20 @@ import { useQueueUserOp } from "./useQueueUserOps";
 import { useMutation } from "@tanstack/react-query";
 import { getUserOperationHash } from "permissionless";
 import { useActiveNetwork } from "../../Network/hooks";
-import { useQueryClient } from "@tanstack/react-query";
+import { EntryPoint } from "permissionless/_types/types";
 import { useActiveAccount, useActiveValidator } from "../../Account/hooks";
 import { contracts } from "@/src/constants/contracts";
 
-export const useCreateUserOp = () => {
+export const useCreateUserOp = (account?: Account) => {
   const [activeNetwork] = useActiveNetwork();
   const [activeAccount] = useActiveAccount();
   const [activeValidator] = useActiveValidator();
   const queueUserOp = useQueueUserOp();
-  const queryClient = useQueryClient();
-  const nonce = useGetNonce();
+  const { getNonce } = useGetNonce(account);
 
   const defaultOperationProps = {
     network: activeNetwork,
-    activeAccount: activeAccount,
+    activeAccount: account || activeAccount,
   };
 
   const _createUserOp = async ({
@@ -37,9 +36,11 @@ export const useCreateUserOp = () => {
     validator?: Validator;
     callback?: () => void;
   }) => {
+    const _account = account || activeAccount;
+    const nonce = await getNonce();
     const userOp = await createAndSignUserOp({
       ...defaultOperationProps,
-      activeAccount: account || activeAccount,
+      activeAccount: _account,
       actions,
       nonce,
       chosenValidator: validator || activeValidator,
@@ -47,7 +48,7 @@ export const useCreateUserOp = () => {
 
     const hash = getUserOperationHash({
       userOperation: userOp,
-      entryPoint: contracts.ENTRY_POINT_ADDRESS,
+      entryPoint: contracts.ENTRY_POINT_ADDRESS as EntryPoint,
       chainId: activeNetwork.id,
     });
 
@@ -58,9 +59,6 @@ export const useCreateUserOp = () => {
 
   const createUserOp = useMutation({
     mutationFn: _createUserOp,
-    onSuccess: () => {
-      // queryClient.invalidateQueries([]);
-    },
   });
   return createUserOp;
 };

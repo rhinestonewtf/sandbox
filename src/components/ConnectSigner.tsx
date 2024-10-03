@@ -1,26 +1,22 @@
 "use client";
 import { useAccount } from "wagmi";
+import { useModal } from "connectkit";
 import { useEffect, useState } from "react";
 import { SignItem } from "../domains/User/components";
-import { useConnectModal } from "@rainbow-me/rainbowkit";
 
 type Props = {
-  title?: string;
-  subTitle?: string;
   selectedSigner?: string;
   disabled?: boolean;
   onSignerChanged: (signer: string) => void;
 };
 
 export const ConnectSigner = ({
-  title,
-  subTitle,
   selectedSigner,
   onSignerChanged,
   disabled,
 }: Props) => {
   const { address, isConnected } = useAccount();
-  const { openConnectModal, connectModalOpen: open } = useConnectModal();
+  const { setOpen, open } = useModal();
   const [signer, setSigner] = useState(
     localStorage.getItem(`signer`) || selectedSigner
   );
@@ -34,8 +30,13 @@ export const ConnectSigner = ({
   }, [isConnected]);
 
   useEffect(() => {
+    if (isConnected) {
+      onSignerChanged(address as string);
+    }
+  }, [isConnected]);
+
+  useEffect(() => {
     if (isConnected && open) {
-      console.log("here");
       localStorage.setItem(`signer`, address as string);
       setSigner(address as string);
       onSignerChanged(address as string);
@@ -50,7 +51,7 @@ export const ConnectSigner = ({
         subTitle="Sign transactions using your existing wallet"
         isSelected={!!signer}
         onClick={() => {
-          !disabled && openConnectModal ? openConnectModal() : null;
+          !disabled && setOpen(true);
         }}
       />
     </>

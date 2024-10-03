@@ -1,9 +1,9 @@
 type Props = {
-  title: string
-  subTitle: string
-  actions?: React.ReactNode
-  className?: string
-}
+  title: string;
+  subTitle: string;
+  actions?: React.ReactNode;
+  className?: string;
+};
 
 export const SideHeader = ({ title, subTitle, actions, className }: Props) => {
   return (
@@ -12,12 +12,14 @@ export const SideHeader = ({ title, subTitle, actions, className }: Props) => {
         <h1 className="text-neutral-dark text-2xl font-medium font-oatmealProMedium">
           {title}
         </h1>
-        <p className="text-neutral-dark text-base font-normal">{subTitle}</p>
+        <div className="text-neutral-dark text-base font-normal">
+          {subTitle}
+        </div>
       </div>
       <div>{actions}</div>
     </div>
-  )
-}
+  );
+};
 
 export const MainHeader = ({ title, subTitle, actions, className }: Props) => {
   return (
@@ -28,9 +30,11 @@ export const MainHeader = ({ title, subTitle, actions, className }: Props) => {
         <h1 className="text-neutral-dark text-2xl font-medium font-oatmealProMedium">
           {title}
         </h1>
-        <p className="text-neutral-dark text-base font-normal">{subTitle}</p>
+        <div className="text-neutral-dark text-base font-normal">
+          {subTitle}
+        </div>
       </div>
       <div>{actions}</div>
     </div>
-  )
-}
+  );
+};
