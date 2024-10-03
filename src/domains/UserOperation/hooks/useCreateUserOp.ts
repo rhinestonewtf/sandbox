@@ -52,6 +52,8 @@ export const useCreateUserOp = (account?: Account) => {
       chainId: activeNetwork.id,
     });
 
+    console.log("UserOp hash", hash);
+
     queueUserOp({ name, signedOp: userOp, hash, callback });
 
     return userOp;

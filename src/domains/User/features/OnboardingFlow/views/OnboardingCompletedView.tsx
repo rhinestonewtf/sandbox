@@ -20,7 +20,7 @@ export const OnboardingCompletedView = ({ onBackClick }: Props) => {
 
   const walletSigner = localStorage.getItem(`signer`) || undefined;
 
-  const salt = "0"; // todo: get latest salt (random?)
+  const salt = "1"; // todo: get latest salt (random?)
 
   const { refetch: createAccount, isFetching } = useCreateAccount({
     webauthnCredential,
