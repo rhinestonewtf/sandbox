@@ -1,5 +1,7 @@
 # Rhinestone Sandbox
 
+> **No longer maintained.** This repository is kept for reference. For new projects, use the [Rhinestone SDK](https://docs.rhinestone.dev).
+
 **A frontend playground building and testing smart account modules**
 
 > The Sandbox is in active development and is subject to breaking changes. If you spot a bug, please take out an issue and we will fix it as soon as we can.
